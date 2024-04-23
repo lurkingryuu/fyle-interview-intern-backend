@@ -66,3 +66,15 @@ def h_principal():
     }
 
     return headers
+
+
+@pytest.fixture
+def h_unauthorized():
+    headers = {
+        'X-Principal': json.dumps({
+            'principal_id': 2,
+            'user_id': 6
+        })
+    }
+
+    return headers
