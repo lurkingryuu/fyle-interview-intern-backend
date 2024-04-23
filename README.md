@@ -54,3 +54,54 @@ pytest -vvv -s tests/
 # pytest --cov
 # open htmlcov/index.html
 ```
+
+### Run with Docker
+
+```bash
+docker build -t fyle-backend-challenge .
+docker run -d -p 7755:7755 --env GUNICORN_PORT=7755 \
+        --name fyle-backend-challenge-1 fyle-backend-challenge
+```
+
+- The other environment variables are specified in [docker-compose.yml](./docker-compose.yml)
+
+- The server will be running at `http://localhost:7755`
+
+- To check logs
+
+```bash
+docker logs -f fyle-backend-challenge-1
+```
+
+- To stop the server
+
+```bash
+docker stop fyle-backend-challenge-1
+```
+
+- To remove the container
+
+```bash
+docker rm fyle-backend-challenge-1
+```
+
+### Run with Docker Compose
+
+```bash
+docker-compose build
+docker-compose up -d
+```
+
+The server will be running at `http://localhost:7755`
+
+To check logs
+
+```bash
+docker-compose logs -f
+```
+
+To stop the server
+
+```bash
+docker-compose down
+```

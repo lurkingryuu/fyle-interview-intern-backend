@@ -1,0 +1,28 @@
+services:
+  app:
+    build: .
+    container_name: classroom
+    ports:
+      - 7755:${GUNICORN_PORT:-7755}
+    # volumes:      
+      # store.sqlite3 should have been persisted in a volume but due to current directory
+      # structure, it is not possible to persist it in a mounted volume
+    networks:
+      - classroom_network
+    environment:
+      - GUNICORN_PORT=${GUNICORN_PORT:-7755}
+      - GUNICORN_BACKLOG=${GUNICORN_BACKLOG:-50}
+      - GUNICORN_NUMBER_WORKERS=${GUNICORN_NUMBER_WORKERS:-1}
+      - GUNICORN_NUMBER_WORKER_THREADS=${GUNICORN_NUMBER_WORKER_THREADS:-1}
+      - GUNICORN_NUMBER_WORKER_CONNECTIONS=${GUNICORN_NUMBER_WORKER_CONNECTIONS:-20}
+      - GUNICORN_WORKER_TIMEOUT=${GUNICORN_WORKER_TIMEOUT:-60}
+      - GUNICORN_KEEPALIVE=${GUNICORN_KEEPALIVE:-2}
+      - GUNICORN_LOG_LEVEL=${GUNICORN_LOG_LEVEL:-info}
+      - GUNICORN_WORKER_CLASS=${GUNICORN_WORKER_CLASS:-sync}
+      - GUNICORN_MAX_REQUESTS=${GUNICORN_MAX_REQUESTS:-0}
+      - GUNICORN_MAX_REQUESTS_JITTER=${GUNICORN_MAX_REQUESTS_JITTER:-20}
+      - GUNICORN_WORKER_GRACEFUL_TIMEOUT=${GUNICORN_WORKER_GRACEFUL_TIMEOUT:-5}
+
+networks:
+  classroom_network:
+    driver: bridge
